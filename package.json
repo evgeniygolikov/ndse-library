@@ -1,0 +1,30 @@
+{
+  "name": "ndse-library",
+  "version": "1.0.0",
+  "description": "Репозиторий для учебного проекта \"Библиотека\".",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evgeniygolikov/ndse-library.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/evgeniygolikov/ndse-library/issues"
+  },
+  "homepage": "https://github.com/evgeniygolikov/ndse-library#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "express-form-data": "^2.0.17",
+    "node-unique-id-generator": "^0.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
