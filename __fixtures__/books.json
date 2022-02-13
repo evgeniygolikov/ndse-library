@@ -1,0 +1,22 @@
+[
+    {
+        "id": "16447843122883670650160191db8c",
+        "title": "Заголовок книги",
+        "description": "Описание книги",
+        "authors": "Л. Ф. Разработчиков",
+        "favorite": "true",
+        "fileCover": "2022-02-13T20-31-52.281Z-book-cover.png",
+        "fileName": "big-book.pdf",
+        "fileBook": "2022-02-13T20-31-52.284Z-big-book.pdf"
+    },
+    {
+        "id": "164478568277382489344419fa102b",
+        "title": "Заголовок книги",
+        "description": "Описание книги",
+        "authors": "Л. Ф. Разработчиков",
+        "favorite": "true",
+        "fileCover": "2022-02-13T20-54-42.768Z-book-cover.png",
+        "fileName": "",
+        "fileBook": ""
+    }
+]
