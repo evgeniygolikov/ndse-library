@@ -11,88 +11,120 @@ const BOOKS_PATH = '/books';
 const BOOK_PATH = `${BOOKS_PATH}/:id`;
 const BOOK_DOWNLOAD_PATH = `${BOOK_PATH}/download`;
 
-const getBooks = async (req, res) => {
-    res.json(await booksService.getAll());
+const ERROR_MESSAGES = {
+    BOOK: {
+        NOT_FOUND: 'Книга не найдена',
+    },
 };
 
-const getBook = async (req, res, next) => {
-    const {id} = req.params;
-    const book = await booksService.get(id);
+const getBooks = async (req, res, next) => {
+    try {
+        const books = await booksService.getAll();
 
-    if (book) {
-        res.json(book);
-    } else {
-        next(new NotFoundError(`Can not find a book with id: ${id}`));
+        res.json({data: {books}});
+    } catch (err) {
+        next(err);
     }
 };
 
-const createBook = async (req, res) => {
-    const {title, description, authors, favorite} = req.body;
-    const fileCover = req.files?.fileCover?.[0].filename;
-    const fileBook = req.files?.fileBook?.[0].filename;
-    const fileName = req.files?.fileBook?.[0].originalname;
-    const book = await booksService.create({
-        title,
-        description,
-        authors,
-        favorite,
-        ...fileCover && {fileCover},
-        ...fileName && {fileName},
-        ...fileBook && {fileBook},
-    });
+const getBook = async (req, res, next) => {
+    try {
+        const {id} = req.params;
+        const book = await booksService.get(id);
 
-    res.status(HTTP_STATUS_CODE.CREATED).json(book);
+        if (!book) {
+            throw new NotFoundError(ERROR_MESSAGES.BOOK.NOT_FOUND);
+        }
+
+        res.json({data: {book}});
+    } catch (err) {
+        next(err);
+    }
+};
+
+const createBook = async (req, res, next) => {
+    try {
+        const {title, description, authors, favorite} = req.body;
+        const fileCover = req.files?.fileCover?.[0].filename;
+        const fileBook = req.files?.fileBook?.[0].filename;
+        const fileName = req.files?.fileBook?.[0].originalname;
+        const book = await booksService.create({
+            title,
+            description,
+            authors,
+            favorite,
+            ...fileCover && {fileCover},
+            ...fileName && {fileName},
+            ...fileBook && {fileBook},
+        });
+
+        res.status(HTTP_STATUS_CODE.CREATED).json(book);
+    } catch (err) {
+        next(err);
+    }
 };
 
 const updateBook = async (req, res, next) => {
-    const {id} = req.params;
-    const {title, description, authors, favorite} = req.body;
-    const fileCover = req.files?.fileCover?.[0].filename;
-    const fileBook = req.files?.fileBook?.[0].filename;
-    const fileName = req.files?.fileBook?.[0].originalname;
-    const book = await booksService.update(id, {
-        title,
-        description,
-        authors,
-        favorite,
-        ...fileCover && {fileCover},
-        ...fileName && {fileName},
-        ...fileBook && {fileBook},
-    });
+    try {
+        const {id} = req.params;
+        const {title, description, authors, favorite} = req.body;
+        const fileCover = req.files?.fileCover?.[0].filename;
+        const fileBook = req.files?.fileBook?.[0].filename;
+        const fileName = req.files?.fileBook?.[0].originalname;
+        const book = await booksService.update(id, {
+            title,
+            description,
+            authors,
+            favorite,
+            ...fileCover && {fileCover},
+            ...fileName && {fileName},
+            ...fileBook && {fileBook},
+        });
 
-    if (book) {
-        res.json(book);
-    } else {
-        next(new NotFoundError(`Can not find a book with id: ${id}`));
+        if (!book) {
+            throw new NotFoundError(ERROR_MESSAGES.BOOK.NOT_FOUND);
+        }
+
+        res.json({data: {book}});
+    } catch (err) {
+        next(err);
     }
 };
 
 const deleteBook = async (req, res, next) => {
-    const {id} = req.params;
-    const success = await booksService.remove(id);
+    try {
+        const {id} = req.params;
+        const removedBook = await booksService.remove(id);
 
-    if (success) {
-        res.json(true);
-    } else {
-        next(new NotFoundError(`Can not find a book with id: ${id}`));
+        if (!removedBook) {
+            throw new NotFoundError(ERROR_MESSAGES.BOOK.NOT_FOUND);
+        }
+
+        res.json({data: null});
+    } catch (err) {
+        next(err);
     }
 };
 
 const downloadBook = async (req, res, next) => {
-    const {id} = req.params;
-    const book = await booksService.get(id);
+    try {
+        const {id} = req.params;
+        const book = await booksService.get(id);
 
-    if (book) {
+        if (!book) {
+            throw new NotFoundError(ERROR_MESSAGES.BOOK.NOT_FOUND);
+        }
+
         const bookFilePath = path.resolve(CONFIG.UPLOADS_PATH, book.fileBook);
         const bookFileExists = await fileExists(bookFilePath);
 
         if (bookFileExists) {
             res.download(bookFilePath, book.fileName);
         } else {
-            res.json(null);
+            res.json({data: null});
         }
-    } else {
-        next(new NotFoundError(`Can not find a book with id: ${id}`));
+    } catch (err) {
+        next(err);
     }
 };
 

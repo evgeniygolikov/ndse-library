@@ -78,6 +78,8 @@ const ENV = {
 const CONFIG = {
     PORT: process.env.PORT ?? 3000,
     ENV: process.env.NODE_ENV ?? ENV.DEV,
+    VIEWS_PATH: path.resolve('src/views'),
+    PUBLIC_PATH: path.resolve('public'),
     UPLOADS_PATH: path.resolve('public/img/uploads'),
 };
 

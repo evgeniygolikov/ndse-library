@@ -37,7 +37,9 @@ const remove = async (bookId) => {
         await deleteUploadedFile(book.fileBook);
     }
 
-    return await booksRepository.remove(bookId);
+    await booksRepository.remove(bookId);
+
+    return book;
 };
 
 module.exports = {

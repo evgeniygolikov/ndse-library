@@ -80,8 +80,6 @@ const remove = async (bookId) => {
         allBooks.splice(bookIndex, 1);
 
         await store.set(allBooks);
-
-        return true;
     }
 };
 
