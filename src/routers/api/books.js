@@ -12,9 +12,7 @@ const BOOK_PATH = `${BOOKS_PATH}/:id`;
 const BOOK_DOWNLOAD_PATH = `${BOOK_PATH}/download`;
 
 const ERROR_MESSAGES = {
-    BOOK: {
-        NOT_FOUND: 'Книга не найдена',
-    },
+    BOOK_NOT_FOUND: 'Книга не найдена',
 };
 
 const getBooks = async (req, res, next) => {
@@ -33,7 +31,7 @@ const getBook = async (req, res, next) => {
         const book = await booksService.get(id);
 
         if (!book) {
-            throw new NotFoundError(ERROR_MESSAGES.BOOK.NOT_FOUND);
+            throw new NotFoundError(ERROR_MESSAGES.BOOK_NOT_FOUND);
         }
 
         res.json({data: {book}});
@@ -52,13 +50,13 @@ const createBook = async (req, res, next) => {
             title,
             description,
             authors,
-            favorite,
+            favorite: Boolean(favorite),
             ...fileCover && {fileCover},
             ...fileName && {fileName},
             ...fileBook && {fileBook},
         });
 
-        res.status(HTTP_STATUS_CODE.CREATED).json(book);
+        res.status(HTTP_STATUS_CODE.CREATED).json({data: {book}});
     } catch (err) {
         next(err);
     }
@@ -75,14 +73,14 @@ const updateBook = async (req, res, next) => {
             title,
             description,
             authors,
-            favorite,
+            favorite: Boolean(favorite),
             ...fileCover && {fileCover},
             ...fileName && {fileName},
             ...fileBook && {fileBook},
         });
 
         if (!book) {
-            throw new NotFoundError(ERROR_MESSAGES.BOOK.NOT_FOUND);
+            throw new NotFoundError(ERROR_MESSAGES.BOOK_NOT_FOUND);
         }
 
         res.json({data: {book}});
@@ -97,7 +95,7 @@ const deleteBook = async (req, res, next) => {
         const removedBook = await booksService.remove(id);
 
         if (!removedBook) {
-            throw new NotFoundError(ERROR_MESSAGES.BOOK.NOT_FOUND);
+            throw new NotFoundError(ERROR_MESSAGES.BOOK_NOT_FOUND);
         }
 
         res.json({data: null});
@@ -112,7 +110,7 @@ const downloadBook = async (req, res, next) => {
         const book = await booksService.get(id);
 
         if (!book) {
-            throw new NotFoundError(ERROR_MESSAGES.BOOK.NOT_FOUND);
+            throw new NotFoundError(ERROR_MESSAGES.BOOK_NOT_FOUND);
         }
 
         const bookFilePath = path.resolve(CONFIG.UPLOADS_PATH, book.fileBook);

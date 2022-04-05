@@ -4,17 +4,17 @@
         "title": "Заголовок книги",
         "description": "Описание книги",
         "authors": "Л. Ф. Разработчиков",
-        "favorite": "true",
         "fileCover": "2022-02-16T03-39-13.002Z-book-cover.png",
         "fileName": "big-book.pdf",
-        "fileBook": "2022-02-16T03-39-13.006Z-big-book.pdf"
+        "fileBook": "2022-02-16T03-39-13.006Z-big-book.pdf",
+        "favorite": true
     },
     {
         "id": "164498298876737332080117849e10",
         "title": "Заголовок книги",
         "description": "Описание книги",
         "authors": "Л. Ф. Разработчиков",
-        "favorite": "true",
+        "favorite": true,
         "fileCover": "2022-02-16T03-43-08.760Z-book-cover.png",
         "fileName": "big-book.pdf",
         "fileBook": "2022-02-16T03-43-08.764Z-big-book.pdf"
@@ -24,7 +24,7 @@
         "title": "Заголовок книги",
         "description": "Описание книги",
         "authors": "Л. Ф. Разработчиков",
-        "favorite": "true",
+        "favorite": true,
         "fileCover": "2022-02-16T04-10-19.129Z-book-cover.png",
         "fileName": "big-book.pdf",
         "fileBook": "2022-02-16T04-10-19.132Z-big-book.pdf"

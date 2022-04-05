@@ -27,11 +27,19 @@ const ALLOWED_BOOK_TYPES = [
 const fileFilter = (req, file, cb) => {
     switch (file.fieldname) {
         case 'fileCover':
-            cb(null, ALLOWED_COVER_TYPES.includes(file.mimetype));
+            if (ALLOWED_COVER_TYPES.includes(file.mimetype)) {
+                cb(null, true);
+            } else {
+                cb(new Error(`Wrong file type: ${file.mimetype}`));
+            }
             break;
 
         case 'fileBook':
-            cb(null, ALLOWED_BOOK_TYPES.includes(file.mimetype));
+            if (ALLOWED_BOOK_TYPES.includes(file.mimetype)) {
+                cb(null, true);
+            } else {
+                cb(new Error(`Wrong file type: ${file.mimetype}`));
+            }
             break;
     }
 };

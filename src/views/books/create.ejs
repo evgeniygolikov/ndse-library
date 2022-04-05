@@ -1,0 +1,15 @@
+<% extend('../partials/layout') %>
+
+<%- include('../partials/menu', {links}) %>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4"><%= title %></h1>
+    </div>
+</div>
+
+<div class="mb-3">
+    <a href="/books">&#8592; Вернуться назад</a>
+</div>
+
+<%- include('../partials/form', {book}) %>

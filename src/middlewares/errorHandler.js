@@ -6,16 +6,18 @@ const errorHandler = (err, req, res, next) => {
         next(err);
     }
 
-    res.format({
-        json() {
-            const {code, name, message, details} = err instanceof HTTPError ? err : new InternalServerError();
+    console.log(err);
 
-            res.status(code).json({error: {code, name, message, details}});
-        },
+    res.format({
         html() {
             const {code, message} = err instanceof HTTPError ? err : new InternalServerError();
 
             res.status(code).render('error', {title: `${code} | ${message}`});
+        },
+        json() {
+            const {code, name, message, details} = err instanceof HTTPError ? err : new InternalServerError();
+
+            res.status(code).json({error: {code, name, message, details}});
         },
         default() {
             res.status(HTTP_STATUS_CODE.NOT_ACCEPTABLE).send('Cервер не может вернуть ответ, соответствующий списку допустимых значений:\n- text/html\n- application/json');

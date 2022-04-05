@@ -24,7 +24,7 @@ server.use(express.json());
 server.use(express.urlencoded({extended: true}));
 server.use(cors());
 
-server.use(express.static(CONFIG.PUBLIC_PATH, {maxAge: 10000}));
+server.use('/public', express.static(CONFIG.PUBLIC_PATH, {maxAge: 10000}));
 server.use('/', Object.values(webRouters));
 server.use('/api', Object.values(apiRouters));
 
